@@ -25,3 +25,7 @@ ipykernel>=6.23.0
 
 # Time Series specific
 statsmodels>=0.14.0
+
+# Optional: for advanced features
+# optuna>=3.0.0  # Hyperparameter tuning
+# tensorboard>=2.13.0  # Training visualization
