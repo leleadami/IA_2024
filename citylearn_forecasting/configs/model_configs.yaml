@@ -1,0 +1,90 @@
+# Configuration file for time series forecasting models
+
+# Training configuration
+training:
+  batch_size: 64
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  stride: 1
+  num_workers: 4
+  early_stopping: 20
+
+# Model configurations
+models:
+  # Basic LSTM
+  lstm:
+    seq_len: 96
+    pred_len: 24
+    hidden_size: 128
+    num_layers: 2
+    output_size: 1
+    dropout: 0.2
+    bidirectional: false
+
+  # LSTM Autoencoder
+  lstm_autoencoder:
+    seq_len: 96
+    pred_len: 24
+    hidden_size: 128
+    num_layers: 2
+    output_size: 1
+    dropout: 0.2
+
+  # LSTM with Attention
+  lstm_attention:
+    seq_len: 96
+    pred_len: 24
+    hidden_size: 128
+    num_layers: 2
+    output_size: 1
+    dropout: 0.2
+    attention_type: bahdanau  # or 'luong'
+
+  # LSTM Encoder-Decoder
+  lstm_encoder_decoder:
+    seq_len: 96
+    pred_len: 24
+    hidden_size: 128
+    num_layers: 2
+    output_size: 1
+    dropout: 0.2
+    teacher_forcing_ratio: 0.5
+
+  # TimesNet
+  timesnet:
+    seq_len: 96
+    pred_len: 24
+    d_model: 64
+    d_ff: 128
+    num_layers: 2
+    top_k: 5
+    num_kernels: 6
+    dropout: 0.1
+
+# Data configuration
+data:
+  # Features to use from CityLearn
+  features:
+    - net_electricity_consumption
+    - solar_generation
+    - cooling_demand
+    - heating_demand
+    - outdoor_dry_bulb_temperature
+    - hour
+    - day_type
+
+  # Target variable
+  target: net_electricity_consumption
+
+  # Data splits
+  train_ratio: 0.7
+  val_ratio: 0.15
+  test_ratio: 0.15
+
+  # Preprocessing
+  scaler_type: standard  # 'standard', 'minmax', 'robust'
+  handle_missing: forward_fill  # 'drop', 'forward_fill', 'interpolate'
+  handle_outliers: clip  # 'clip', 'remove', 'none'
+  outlier_threshold: 3.0
